@@ -1,76 +1,73 @@
+let input_field=document.querySelector("#input_field");
+let input=document.querySelector("#input");
+let add=document.querySelector("#add");
+let ptag=document.createElement("p");
 
+let checked=new Set();
 
-let additems=document.querySelector(".add_item");
 let counter=0;
+let counter1=0;
+add.addEventListener('click',()=>{
 
-additems.addEventListener('click' , ()=>{
-    counter++;
+   if (input.value !== "") {
+      let div1 = document.createElement("div");
+      let checkbox = document.createElement("input");
+      let ptag = document.createElement("p");
+      let remove = document.createElement("button");
 
-    let newhr=document.createElement("hr");
-    let main_div=document.querySelector(".main_div");
-    main_div.append(newhr);
-    newhr.classList.add("secondary_hr");
+      
+      div1.classList.add("list");
+      checkbox.classList.add("checkbox");
+      checkbox.type = "checkbox";
+      ptag.classList.add("task");
+      remove.classList.add("remove", "fa-solid", "fa-xmark");
+      remove.innerHTML = `<i></i>`;
 
+      
+      ptag.innerText = input.value;
 
-    let div=document.createElement("div");
-    main_div.append(div);
-    div.classList.add("list_container");
+      div1.append(checkbox);
+      div1.append(ptag);
+      div1.append(remove);
 
-   
+      input_field.after(div1);
 
-    let list_container=document.querySelectorAll(".list_container");
-
-let input0=document.createElement("p");
-input0.innerText=`${counter+1}`;
-list_container[counter].append(input0);
-
-
-    let input1=document.createElement("input");
-    input1.type="text";
-    input1.placeholder="Add_Task";
-    input1.required;
-    input1.size="30";
-    input1.classList.add("add_task");
-    list_container[counter].append(input1);
-
-    let input2=document.createElement("input");
-    input2.type="time";
-    input2.classList.add("time");
-    list_container[counter].append(input2);
-
-    let deleteitems=document.createElement("button");
-    deleteitems.classList.add("time");
-    deleteitems.innerText="Delete Task";
-    deleteitems.classList.add("delete_task");
-    list_container[counter].append(deleteitems);
-
-
-    
-// if(counter>5){
-//     let body=document.querySelector("body");
-//     console.log(body.style.height);
-//     let currentHeight = parseFloat(getComputedStyle(body).height) / window.innerHeight * 100;
-//     body.style.height = (currentHeight + 10) + "vh";
-
-//     console.log(body.style.height);
-//     console.log(main_div);
-
-//     let currentHeight1 = parseFloat(getComputedStyle(main_div).height) / window.innerHeight * 100;
-//     main_div.style.height = (currentHeight1 + 10) + "vh";
-// }
-
-});
+      input.value = "";
 
 
 
-let delete_task=document.querySelectorAll(".delete_task");
+      checkbox.addEventListener('click',(e)=>{
+         let ptag1=document.querySelectorAll('.task');
+         const checkboxes = Array.from(document.querySelectorAll('.checkbox'));
 
-delete_task.forEach((deletetask)=>{
-    deletetask.addEventListener('click',()=>{
+         const index = checkboxes.indexOf(e.target);
+        
+            if(!checked.has(checkbox)){
+               ptag1[index].innerHTML=`<s>${ptag1[index].innerText}</s>`
+               checked.add(checkbox);
+            }
+            else{
+                  ptag1[index].innerHTML=`${ptag1[index].innerText}`
+                  checked.delete(checkbox);
+            }
 
-        input1.remove();
-        input2.remove();
-        delete_task.remove();
-        list_container.remove();
-    });
-});
+         console.log(checkboxes);
+         console.log(e.target);
+
+
+      })
+
+      remove.addEventListener('click',(e)=>{
+       let list=document.querySelectorAll('.list');
+         const removebtn = Array.from(document.querySelectorAll('.remove'));
+
+         const index = removebtn.indexOf(e.target);
+         list[index].remove();
+      })
+        counter++;
+
+   }
+})
+
+
+
